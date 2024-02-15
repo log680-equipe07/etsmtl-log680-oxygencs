@@ -1,0 +1,19 @@
+name: Bug Report
+description: File a bug report
+title: "[Bug]: "
+labels: ["bug", "needs work"]
+projects: ["Project_LOG680_H24_EQ07_v2"]
+
+body:
+  - type: markdown
+    attributes:
+      value: |        
+        Merci de bien détailler le bug afin qu'on puisse le résoudre efficacement.
+  - type: textarea
+    id: bug-description
+    attributes:
+      label: Description du bug
+      description: Détailler la situation
+    validations:
+      required: true
+

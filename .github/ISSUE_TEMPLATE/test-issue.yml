@@ -1,0 +1,19 @@
+name: Test issue
+description: Créer une tâche pour un test quelconque
+title: "[Test]: "
+labels: ["test"]
+projects: ["Project_LOG680_H24_EQ07_v2"]
+
+body:
+  - type: markdown
+    attributes:
+      value: |        
+        Merci de bien détailler ce que le test accompliera
+  - type: textarea
+    id: test-description
+    attributes:
+      label: Informations du test
+      description: Décrire les informations du tests
+    validations:
+      required: true
+
