@@ -1,0 +1,25 @@
+name: Normal Issue
+description: Template pour un issue par défaut
+title: "[Issue]: "
+labels: ["new", "more information needed"]
+projects: ["Project_LOG680_H24_EQ07_v2"]
+
+body:
+  - type: markdown
+    attributes:
+      value: |        
+        Merci de bien détailler ce issue et de le update si nécessaire.
+  - type: textarea
+    id: default-issue-description
+    attributes:
+      label: Description du Issue
+      description: Détailler dequoi traitera ce Issue précisément
+    validations:
+      required: true
+
+
+
+
+
+
+

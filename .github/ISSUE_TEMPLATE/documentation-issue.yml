@@ -1,0 +1,19 @@
+name: Documentation Task
+description: Requête de documentation
+title: "[Doc]: "
+labels: ["documentation"]
+projects: ["Project_LOG680_H24_EQ07_v2"]
+
+body:
+  - type: markdown
+    attributes:
+      value: |        
+        Merci de bien détailler ce qui est nécessaire en termes de documentation.
+  - type: textarea
+    id: doc-description
+    attributes:
+      label: Sujet de documentation
+      description: Dequoi avons-nous de besoin (inclure checkboxes)
+    validations:
+      required: true
+

@@ -1,0 +1,19 @@
+name: New Feature
+description: Template pour un nouveau feature/addition
+title: "[Feature]: "
+labels: ["new", "needs work"]
+projects: ["Project_LOG680_H24_EQ07_v2"]
+
+body:
+  - type: markdown
+    attributes:
+      value: |        
+        Merci de bien détailler ce sera compris dans ce nouveau feature
+  - type: textarea
+    id: feature-description
+    attributes:
+      label: Informations sur le feature
+      description: Dequoi avons-nous de besoin (inclure checkboxes)
+    validations:
+      required: true
+
