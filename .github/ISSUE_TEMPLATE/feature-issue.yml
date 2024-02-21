@@ -8,7 +8,7 @@ body:
   - type: markdown
     attributes:
       value: |        
-        Merci de bien détailler ce sera compris dans ce nouveau feature
+        Merci de bien détailler ce qui sera compris dans ce nouveau feature
   - type: textarea
     id: feature-description
     attributes:
