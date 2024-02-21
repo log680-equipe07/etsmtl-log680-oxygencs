@@ -8,7 +8,7 @@ body:
   - type: markdown
     attributes:
       value: |        
-        Merci de bien détailler ce que le test accompliera
+        Merci de bien détailler ce qui que le test accompliera
   - type: textarea
     id: test-description
     attributes:
