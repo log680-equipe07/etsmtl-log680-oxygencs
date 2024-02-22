@@ -15,5 +15,5 @@ python_version = "3.8"
 
 [scripts]
 start = "python src/main.py"
-test = "# To implement"
+test = "python -m unittest test.test"
 lint = "# To implement"
