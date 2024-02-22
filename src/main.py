@@ -4,6 +4,7 @@ import logging
 import requests
 import json
 import time
+import psycopg2
 import os
 
 class App:
@@ -62,8 +63,8 @@ class App:
             print(data[0]["date"] + " --> " + data[0]["data"], flush=True)
             timestamp = data[0]["date"]
             temperature = float(data[0]["data"])
-            self.take_action(temperature)
-            self.save_event_to_database(timestamp, temperature)
+            action = self.take_action(temperature)
+            self.save_event_to_database(timestamp, temperature, action)
         except Exception as err:
             print(err)
 
@@ -71,24 +72,34 @@ class App:
         """Take action to HVAC depending on current temperature."""
         if float(temperature) >= float(self.T_MAX):
             self.send_action_to_hvac("TurnOnAc")
+            return 'TurnOnAc'
         elif float(temperature) <= float(self.T_MIN):
             self.send_action_to_hvac("TurnOnHeater")
-
+            return 'TurnOnHeater'
+            
     def send_action_to_hvac(self, action):
         """Send action query to the HVAC service."""
         r = requests.get(f"{self.HOST}/api/hvac/{self.TOKEN}/{action}/{self.TICKS}")
         details = json.loads(r.text)
         print(details, flush=True)
 
-    def save_event_to_database(self, timestamp, temperature):
+    def save_event_to_database(self, timestamp, temperature, action):
         """Save sensor data into database."""
-        try:
-            # To implement
-            pass
-        except requests.exceptions.RequestException as e:
-            # To implement
-            pass
-
+        try:                        
+            conn = psycopg2.connect(os.getenv('DATABASE_URL'))
+            cur = conn.cursor()
+            
+            cur.execute('INSERT INTO "OxygenCS_SensorData" ("timestamp", "temperature", "action") VALUES (%s, %s, %s)', (timestamp, temperature, str(action)))
+            conn.commit()
+            
+            print("Data saved successfully")
+        except psycopg2.Error as e:
+            print(f"Failed to save event to database: {e}")
+        finally:
+            if cur:
+                cur.close()
+            if conn:
+                conn.close()
 
 if __name__ == "__main__":
     app = App()
