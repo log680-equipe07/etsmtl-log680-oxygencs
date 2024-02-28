@@ -12,11 +12,7 @@ COPY Pipfile Pipfile.lock /app/
 RUN pip install pipenv
 
 # Install dependencies from Pipfile
-RUN pipenv install --deploy --ignore-pipfile --system \
-    # Remove Pipenv cache
-    && rm -rf $PIPENV_CACHE_DIR \
-    # Clean up pip cache and temporary files
-    && rm -rf /root/.cache/pip/*
+RUN pipenv install --deploy --ignore-pipfile --system
 
 # Copy the rest of your application code to the container
 COPY . /app
