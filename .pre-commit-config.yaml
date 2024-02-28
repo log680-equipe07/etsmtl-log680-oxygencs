@@ -1,1 +1,22 @@
-## To implement
+repos:
+  - repo: local
+    hooks:
+      - id: pylint
+        name: pylint
+        entry: pylint
+        language: system
+        types: [python]
+        args:
+          - "-rn"  # Only display messages
+          - "-sn"  # Don't display the score
+      - id: pytest
+        name: pytest
+        entry: pipenv run test
+        language: system
+        types: [python]
+  - repo: https://github.com/psf/black
+    rev: 24.2.0
+    hooks:
+      - id: black
+        language: python
+
