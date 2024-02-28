@@ -17,5 +17,8 @@ RUN pipenv install --deploy --ignore-pipfile --system
 # Copy the rest of your application code to the container
 COPY . /app
 
+# Remove unnecessary files
+RUN pipenv --clear
+
 # Run the application
 CMD ["python", "src/main.py"]
