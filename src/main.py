@@ -1,4 +1,4 @@
-"""Logging package"""
+"""Module imports"""
 
 import logging
 import json

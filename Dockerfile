@@ -1,6 +1,6 @@
+# docker build -t oxygen_cs-app . to build the image
 # to run the image locally: docker run -it --rm oxygen_cs-app
-
-FROM python:3.8
+FROM python:3.8-alpine
 
 # Set the working directory in the container
 WORKDIR /app
@@ -12,10 +12,13 @@ COPY Pipfile Pipfile.lock /app/
 RUN pip install pipenv
 
 # Install dependencies from Pipfile
-RUN pipenv install --deploy --ignore-pipfile
+RUN pipenv install --deploy --ignore-pipfile --system
 
 # Copy the rest of your application code to the container
 COPY . /app
 
+# Remove unnecessary files
+RUN pipenv --clear
+
 # Run the application
-CMD ["pipenv", "run", "start"]
+CMD ["python", "src/main.py"]
