@@ -19,7 +19,7 @@ class App:
         self._hub_connection = None
         self.ticks = 10
 
-        # To be configured by your team
+        # To be configured
         self.env_var_host = os.getenv("HOST")  # Setup your host here
         self.env_var_token = os.getenv("TOKEN")  # Setup your token here
         self.env_var_t_max = os.getenv("T_MAX")  # Setup your max temperature here
