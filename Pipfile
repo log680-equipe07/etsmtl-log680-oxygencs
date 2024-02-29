@@ -7,7 +7,7 @@ name = "pypi"
 requests = "==2.31.0"
 signalrcore = "==0.9.5"
 python-dotenv = "==1.0.1"
-psycopg2-binary = "*"
+psycopg2 = "*"
 
 [dev-packages]
 

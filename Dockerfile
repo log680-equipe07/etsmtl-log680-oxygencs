@@ -1,24 +1,42 @@
 # docker build -t oxygen_cs-app . to build the image
-# to run the image locally: docker run -it --rm oxygen_cs-app
-FROM python:3.8-alpine
+# to run the image localy: docker run -it --rm oxygen_cs-app
+# Use the official Python image as the base image for the build stage
+FROM python:3.8-alpine AS build
+
+# Install dependencies
+RUN apk add --no-cache build-base libffi-dev openssl-dev postgresql-dev
+RUN pip install pipenv
 
 # Set the working directory in the container
 WORKDIR /app
 
-# Copy the Pipfile and Pipfile.lock from your host to the container
+# Copy the Pipfile and Pipfile.lock to the container
 COPY Pipfile Pipfile.lock /app/
 
-# Install pipenv
-RUN pip install pipenv
+# Install dependencies
+RUN pipenv install --deploy --system --ignore-pipfile && \
+    # Remove unused packages
+    pip uninstall -y filelock pipenv setuptools wheel
 
-# Install dependencies from Pipfile
-RUN pipenv install --deploy --ignore-pipfile --system
+# Runtime stage
+FROM python:3.8-alpine3.14
 
-# Copy the rest of your application code to the container
+# Install libpq package
+RUN apk add --no-cache libpq
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy only the necessary files from the build stage
+COPY --from=build /usr/local/lib/python3.8/site-packages /usr/local/lib/python3.8/site-packages
 COPY . /app
 
-# Remove unnecessary files
-RUN pipenv --clear
+# Set environment variables
+ENV HOST=http://159.203.50.162 \
+    TOKEN=b9824c123708eeeb1146 \
+    T_MAX=30 \
+    T_MIN=15 \
+    DATABASE_URL=postgresql://user01eq7:WiSrt3gxNveG2er8@157.230.69.113:5432/db01eq7
 
 # Run the application
 CMD ["python", "src/main.py"]
