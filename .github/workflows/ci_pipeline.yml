@@ -27,7 +27,12 @@ jobs:
 
       - name: Run unit tests
         run: |
+          export T_MAX=30
+          export T_MIN=15
           pipenv run test
+        env:
+          T_MAX: 30
+          T_MIN: 15
 
       - name: Run pylint, for static code analysis and lint
         run: |
