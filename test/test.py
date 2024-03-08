@@ -2,11 +2,12 @@
 
 import unittest
 from unittest.mock import patch, MagicMock
+import psycopg2
 from src.main import App
 
 
 class TestApp(unittest.TestCase):
-    """This class simply does unit tests for the main.py file"""
+    """This class contains unit tests for the main.py file"""
 
     @patch("src.main.requests.get")
     @patch("src.main.print")
@@ -76,6 +77,29 @@ class TestApp(unittest.TestCase):
         # Assert that conn.commit was called
         mock_connect.return_value.commit.assert_called_once()
         mocked_print.assert_called_with("Data saved successfully")
+
+    @patch("src.main.psycopg2.connect")
+    @patch("src.main.print")
+    def test_save_event_to_database_exception(self, mocked_print, mock_connect):
+        """
+        This tests checks the save_event_to_database method exception handling
+
+        It validates that the print message has the right content
+        ("Failed to save event to database")
+        """
+        mock_cursor = MagicMock()
+        mock_cursor.execute.side_effect = psycopg2.Error("Mocked error")
+        mock_connect.return_value.cursor.return_value = mock_cursor
+
+        app = App()
+
+        # Call save_event_to_database
+        app.save_event_to_database("2024-02-22T08:00:00", 20.0, "TurnOnHeater")
+
+        # Assert that the error message was printed
+        mocked_print.assert_called_with(
+            "Failed to save event to database: Mocked error"
+        )
 
 
 if __name__ == "__main__":
