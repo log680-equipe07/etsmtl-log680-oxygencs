@@ -36,6 +36,7 @@ jobs:
 
       - name: Run pylint, for static code analysis and lint
         run: |
+          pipenv shell
           pipenv run lint
           
       - name: Run black, for formatting
