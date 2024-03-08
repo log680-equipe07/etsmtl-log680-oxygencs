@@ -94,7 +94,7 @@ class App:
         print(details, flush=True)
 
     def save_event_to_database(self, timestamp, temperature, action):
-        """Save sensor data into database."""
+        """Save sensor data into the database."""
         try:
             conn = psycopg2.connect(os.getenv("DATABASE_URL"))
             cur = conn.cursor()
