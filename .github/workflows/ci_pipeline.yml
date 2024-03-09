@@ -34,6 +34,10 @@ jobs:
           T_MAX: 30
           T_MIN: 15
 
+      - name: Install dill
+        run: |
+          pipenv install dill
+
       - name: Run pylint, for static code analysis and lint
         run: |
           pipenv run lint
