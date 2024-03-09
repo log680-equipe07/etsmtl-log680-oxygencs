@@ -1,7 +1,7 @@
 # docker build -t oxygen_cs-app . to build the image
 # to run the image localy: docker run -it --rm oxygen_cs-app
 # Use the official Python image as the base image for the build stage
-FROM python:3.12.2-alpine3.18 AS build
+FROM python:3.12.2-alpine3.19 AS build
 
 # Install dependencies
 RUN apk add --no-cache build-base libffi-dev openssl-dev postgresql-dev
@@ -19,7 +19,7 @@ RUN pipenv install --deploy --system --ignore-pipfile && \
     pip uninstall -y filelock pipenv setuptools wheel
 
 # Runtime stage
-FROM python:3.12.2-alpine3.18
+FROM python:3.12.2-alpine3.19
 
 # Set the working directory in the container
 WORKDIR /app
