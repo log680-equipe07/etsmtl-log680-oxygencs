@@ -7,14 +7,14 @@ name = "pypi"
 requests = "==2.31.0"
 signalrcore = "==0.9.5"
 python-dotenv = "==1.0.1"
-psycopg2 = "*"
+psycopg2-binary = "*"
 
 [dev-packages]
 pylint = "*"
 black = "*"
 
 [requires]
-python_version = "3.8"
+python_version = "3.12"
 
 [scripts]
 start = "python src/main.py"
