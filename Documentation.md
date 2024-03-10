@@ -58,3 +58,19 @@ Suite au succès du pipeline, il est possible de run le conteneur de l'image cr�
 ### Pipeline Metrics
 
 ## Métriques d'intégration continue
+Pour ce qui est des métriques d'intégration continue, nous avons opté pour celles données en exemple dans l'énoncé de laboratoire, soit:
+
+- temps d'exécution pour un build donné;
+
+- temps moyen d'execution pour l'ensemble de builds pour une période donnée;
+  
+- quantité de builds réussis pour une période donnée;
+
+- quantité de builds échoués pour une période donnée;
+
+Il n'était pas spécifier d'utiliser graphQL pour effectuer nos requêtes sur Metrics, mais puisque nous l'avions fait au laboratoire 1, nous avons décidé de poursuivre avec cet API.
+Il a prouvé difficile de concevoir une requête directement claire avec ce dont nous avions de besoin. mais l'important est la tenacité de ses résultats.
+
+
+
+
