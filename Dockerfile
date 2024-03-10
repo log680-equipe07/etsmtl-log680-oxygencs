@@ -31,8 +31,10 @@ COPY . /app
 
 # Set environment variables
 ENV HOST=http://159.203.50.162 \
+    TOKEN=$TOKEN \
     T_MAX=30 \
-    T_MIN=15
+    T_MIN=15 \
+    DATABASE_URL=$DATABASE_URL
 
 # Run the application
 CMD ["python", "src/main.py"]
