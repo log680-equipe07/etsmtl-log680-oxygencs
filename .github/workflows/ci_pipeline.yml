@@ -47,9 +47,15 @@ jobs:
           pipenv run black src/ test/
 
       - name: Build Docker image
+        env:
+          HOST: http://159.203.50.162
+          TOKEN: "${{ secrets.TOKEN }}"
+          T_MAX: 30
+          T_MIN: 15
+          DATABASE_URL: "${{ secrets.DATABASE_URL }}"
         if: github.ref == 'refs/heads/main'
         run: |
-          docker build --build-arg TOKEN="${{ secrets.TOKEN }}" --build-arg DATABASE_URL="${{ secrets.DATABASE_URL }}" -t oxygen_cs-app .
+          docker build --build-arg TOKEN=$TOKEN --build-arg DATABASE_URL=$DATABASE_URL --build-arg T_MIN=$T_MIN --build-arg T_MAX=$T_MAX --build-arg HOST=$HOST -t oxygen_cs-app .
 
       - name: Push Docker image to DockerHub
         if: github.ref == 'refs/heads/main'
