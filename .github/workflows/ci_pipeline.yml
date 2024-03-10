@@ -27,12 +27,12 @@ jobs:
 
       - name: Run unit tests
         run: |
-          export T_MAX=30
-          export T_MIN=15
+          export T_MAX=50
+          export T_MIN=10
           pipenv run test
         env:
-          T_MAX: 30
-          T_MIN: 15
+          T_MAX: 50
+          T_MIN: 10
 
       - name: Install dill
         run: |
@@ -47,15 +47,9 @@ jobs:
           pipenv run black src/ test/
 
       - name: Build Docker image
-        env:
-          HOST: http://159.203.50.162
-          TOKEN: "${{ secrets.TOKEN }}"
-          T_MAX: 30
-          T_MIN: 15
-          DATABASE_URL: "${{ secrets.DATABASE_URL }}"
         if: github.ref == 'refs/heads/main'
         run: |
-          docker build --build-arg TOKEN=$TOKEN --build-arg DATABASE_URL=$DATABASE_URL --build-arg T_MIN=$T_MIN --build-arg T_MAX=$T_MAX --build-arg HOST=$HOST -t oxygen_cs-app .
+          docker build -t oxygen_cs-app .
 
       - name: Push Docker image to DockerHub
         if: github.ref == 'refs/heads/main'
@@ -66,4 +60,4 @@ jobs:
         run: |
           echo "${DOCKERHUB_TOKEN}" | docker login -u "${DOCKERHUB_USERNAME}" --password-stdin
           docker tag oxygen_cs-app "${DOCKERHUB_USERNAME}/oxygen_cs-app:${GITHUB_SHA::8}"
-          docker push "${DOCKERHUB_USERNAME}/oxygen_cs-app:${GITHUB_SHA::8}"      
+          docker push "${DOCKERHUB_USERNAME}/oxygen_cs-app:${GITHUB_SHA::8}"
