@@ -28,6 +28,7 @@ WORKDIR /app
 COPY --from=build /usr/local/lib/python3.12/site-packages /usr/local/lib/python3.12/site-packages
 COPY . /app
 
+
 # Set environment variables
 ENV HOST=http://159.203.50.162 \
     T_MAX=30 \
