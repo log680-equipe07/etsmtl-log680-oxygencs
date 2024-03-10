@@ -24,7 +24,9 @@ class App:
         self.env_var_token = os.getenv("TOKEN")  # Setup your token here
         self.env_var_t_max = 50  # Setup your max temperature here
         self.env_var_t_min = 10  # Setup your min temperature here
-        self.env_var_database_url = "postgresql://user01eq7:WiSrt3gxNveG2er8@157.230.69.113:5432/db01eq7"
+        self.env_var_database_url = (
+            "postgresql://user01eq7:WiSrt3gxNveG2er8@157.230.69.113:5432/db01eq7"
+        )
 
     def __del__(self):
         if self._hub_connection is not None:
