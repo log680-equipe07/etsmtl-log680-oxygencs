@@ -3,6 +3,17 @@
 # Use the official Python image as the base image for the build stage
 FROM python:3.12.2-alpine3.19 AS build
 
+# set environment variables
+ARG TOKEN
+ARG DATABASE_URL
+ENV TOKEN=$TOKEN
+ENV DATABASE_URL=$DATABASE_URL
+
+# Set environment variables
+ENV HOST=http://159.203.50.162 \
+    T_MAX=30 \
+    T_MIN=15
+
 # Install dependencies
 RUN apk add --no-cache build-base libffi-dev openssl-dev postgresql-dev
 RUN pip install pipenv
@@ -27,14 +38,6 @@ WORKDIR /app
 # Copy only the necessary files from the build stage
 COPY --from=build /usr/local/lib/python3.12/site-packages /usr/local/lib/python3.12/site-packages
 COPY . /app
-
-
-# Set environment variables
-ENV HOST=http://159.203.50.162 \
-    TOKEN=$TOKEN \
-    T_MAX=30 \
-    T_MIN=15 \
-    DATABASE_URL=$DATABASE_URL
 
 # Run the application
 CMD ["python", "src/main.py"]
