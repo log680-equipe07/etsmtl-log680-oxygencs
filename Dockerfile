@@ -30,10 +30,8 @@ COPY . /app
 
 # Set environment variables
 ENV HOST=http://159.203.50.162 \
-    TOKEN=b9824c123708eeeb1146 \
     T_MAX=30 \
-    T_MIN=15 \
-    DATABASE_URL=postgresql://user01eq7:WiSrt3gxNveG2er8@157.230.69.113:5432/db01eq7
+    T_MIN=15
 
 # Run the application
 CMD ["python", "src/main.py"]
