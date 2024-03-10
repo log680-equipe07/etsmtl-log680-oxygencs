@@ -21,7 +21,7 @@ Pour ce qui est des tests unitaires liés à cette application, nous avons utili
 Deux fichiers d'image Dockerfile furent créées afin de pouvoir rouler l'application dans n'importe quel environnement. Cela comprend pouvoir récupérer ces images dans nos pipelines d'intégration continue. 
 
 ### Image Oxygen CS
-La première image était pour l'application HVAC. Nous avons décidé de demeurer avec le code source de base en python. Au départ, notre image se trouver à 1 Gb. Grâce à des choix judicieux tels que l'utilisation d'une image de base de petite taille (python:3.12.2-alpine3.19) puis notamment un multi-stage build permettant de seulement installer les packages nécessaires lors du runtime. Notre image finale compressée est de 28.95 Mb. Nous investiguons constamment en des moyens de réduire cette la taille de cette image afin qu'elle soit en dessous de 25 Mb.
+La première image était pour l'application HVAC. Nous avons décidé de demeurer avec le code source de base en python. Au départ, notre image se trouver à 1 Gb. Grâce à des choix judicieux tels que l'utilisation d'une image de base de petite taille (python:3.12.2-alpine3.19) puis notamment un multi-stage build permettant de seulement installer les packages nécessaires lors du runtime. Notre image finale compressée est de 29.13 Mb. Nous investiguons constamment en des moyens de réduire cette la taille de cette image afin qu'elle soit en dessous de 25 Mb.
 
 <img width="897" alt="Screenshot 2024-03-10 at 3 50 35 AM" src="https://github.com/log680-equipe07/oxygencs-grp01-eq07/assets/56934372/57a320c3-1516-4909-9fe2-947a8d3ed7d5">
 
@@ -49,6 +49,11 @@ En ce qui concerne notre pipeline d'intégration continue pour Oxygen CS, nous a
 Un exemple d'un build ayant été avec succès est fourni en capture d'écran ci-dessous, les différentes étapes y sont affichées. À noté que si un job échoue soit pour notamment les tests unitaires, le pylint ou bien le formattage, le build échoue à l'étape concernée et n'est pas complété.
 
 <img width="1042" alt="Screenshot 2024-03-10 at 4 01 10 AM" src="https://github.com/log680-equipe07/oxygencs-grp01-eq07/assets/56934372/2731ddfd-48b9-44ac-b17b-cc5cf0df8b07">
+
+Suite au succès du pipeline, il est possible de run le conteneur de l'image créée:
+
+<img width="1129" alt="Screenshot 2024-03-10 at 8 20 29 AM" src="https://github.com/log680-equipe07/oxygencs-grp01-eq07/assets/56934372/a978bbbd-2271-4964-b26b-35cf80d795e2">
+
 
 ### Pipeline Metrics
 
