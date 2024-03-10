@@ -1,5 +1,6 @@
 # docker build -t oxygen_cs-app . to build the image
 # to run the image localy: docker run -it --rm oxygen_cs-app
+# to run it with a pulled image: docker run -e TOKEN=b9824c123708eeeb1146 -e HOST=http://159.203.50.162 turbowarrior/oxygen_cs-app:e650d943
 # Use the official Python image as the base image for the build stage
 FROM python:3.12.2-alpine3.19 AS build
 
