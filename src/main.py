@@ -96,7 +96,7 @@ class App:
     def save_event_to_database(self, timestamp, temperature, action):
         """Save sensor data into database."""
         try:
-            conn = psycopg2.connect(os.getenv("DATABASE_URL"))
+            conn = psycopg2.connect(self.env_var_database_url)
             cur = conn.cursor()
             cur.execute(
                 'INSERT INTO "OxygenCS_SensorData" '
