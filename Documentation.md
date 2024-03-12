@@ -17,7 +17,7 @@ Veuillez noté qu'à la base, 5 valeurs d'environnement doivent être utilisées
 
 <img width="1129" alt="Screenshot 2024-03-10 at 8 20 29 AM" src="https://github.com/log680-equipe07/oxygencs-grp01-eq07/assets/56934372/a978bbbd-2271-4964-b26b-35cf80d795e2">
 
-### Sauvegarde de données dans la base de données
+### [Sauvegarde de données dans la base de données](#sauvegarde-de-données-dans-la-base-de-données)
 Il nous était également demandé de sauvegarder des données dans la même base de donnée que celle du laboratoire 1. Ces données étaient:
 - Les températures reçues;
 - Leurs heures respectives;
