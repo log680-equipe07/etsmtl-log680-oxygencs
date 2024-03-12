@@ -56,12 +56,23 @@ Un exemple d'un build ayant été avec succès est fourni en capture d'écran ci
 
 <img width="1042" alt="Screenshot 2024-03-10 at 4 01 10 AM" src="https://github.com/log680-equipe07/oxygencs-grp01-eq07/assets/56934372/2731ddfd-48b9-44ac-b17b-cc5cf0df8b07">
 
+Voici un exemple de les différents builds disponibles sur DockerHub:
+![image](https://github.com/log680-equipe07/oxygencs-grp01-eq07/assets/56934372/fd68dbaf-37cf-4841-acf4-17df1145aa15)
+
+
 Suite au succès du pipeline, il est possible de run le conteneur de l'image créée:
 
 <img width="1129" alt="Screenshot 2024-03-10 at 8 20 29 AM" src="https://github.com/log680-equipe07/oxygencs-grp01-eq07/assets/56934372/a978bbbd-2271-4964-b26b-35cf80d795e2">
 
 
 ### Pipeline Metrics
+La même logique fut utilisée en ce qui concerne le pipeline pour Metrics, voici le résultat obtenu sur DockerHub:
+
+![image](https://github.com/log680-equipe07/oxygencs-grp01-eq07/assets/56934372/064f167e-e37e-4e32-9e53-05d567cd00fb)
+
+
+
+## Métriques d'intégration continue
 L'ajout des métriques de pipeline dans l'application Metrics implique l'ajout de toutes les entités permettant de réduire le couplage de notre application et de la rendre plus résiliente face aux changements et erreurs pouvant survenir.
 Nous avons donc ajouté:
 - un nouveau PipelineService, qui gère la désérialisation de notre réponse de l'api de Graphql GitHub
@@ -74,7 +85,8 @@ Nous avons donc ajouté:
   - Successes -> nombre de builds ayant réussis
   - Failures  -> nombre de builds ayant échoués
   - AverageBuildTime -> moyenne de temps d'exécution pour tous les builds
-## Métriques d'intégration continue
+
+
 Pour ce qui est des métriques d'intégration continue, nous avons opté pour celles données en exemple dans l'énoncé de laboratoire, soit:
 
 - temps d'exécution pour un build donné;
