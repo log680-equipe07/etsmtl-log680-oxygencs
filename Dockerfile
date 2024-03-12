@@ -4,9 +4,13 @@
 # Use the official Python image as the base image for the build stage
 FROM python:3.12.2-alpine3.19 AS build
 
-# Install dependencies
-RUN apk add --no-cache build-base libffi-dev openssl-dev postgresql-dev
-RUN pip install pipenv
+# Install dependencies and build Python
+RUN apk add --no-cache --virtual .build-deps \
+        gnupg tar xz bluez-dev bzip2-dev dpkg-dev dpkg expat-dev findutils \
+        gcc gdbm-dev libc-dev libffi-dev libnsl-dev libtirpc-dev linux-headers \
+        make ncurses-dev openssl-dev pax-utils readline-dev sqlite-dev tcl-dev \
+        tk tk-dev util-linux-dev xz-dev zlib-dev \
+    && pip install --no-cache-dir pipenv
 
 # Set the working directory in the container
 WORKDIR /app
