@@ -4,3 +4,13 @@ logs
 .git
 *.md
 .cache
+
+# Exclude version control system directories
+.git
+# Exclude Python bytecode files
+__pycache__
+*.pyc
+# Exclude virtual environment directories
+venv
+.env
+# Exclude any other unnecessary files or directories

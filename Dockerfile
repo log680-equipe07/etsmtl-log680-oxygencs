@@ -11,7 +11,7 @@ RUN pip install pipenv
 # Set the working directory in the container
 WORKDIR /app
 
-# Copy the Pipfile and Pipfile.lock to the container
+# Copy only the necessary files
 COPY Pipfile Pipfile.lock /app/
 
 # Install dependencies
@@ -27,8 +27,9 @@ WORKDIR /app
 
 # Copy only the necessary files from the build stage
 COPY --from=build /usr/local/lib/python3.12/site-packages /usr/local/lib/python3.12/site-packages
-COPY . /app
+COPY src /app/src
 
 # Run the application
 CMD ["python", "src/main.py"]
+
 
