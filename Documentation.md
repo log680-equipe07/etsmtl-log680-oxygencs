@@ -30,7 +30,8 @@ La première image était pour l'application HVAC. Nous avons décidé de demeur
 <img width="897" alt="Screenshot 2024-03-10 at 3 50 35 AM" src="https://github.com/log680-equipe07/oxygencs-grp01-eq07/assets/56934372/57a320c3-1516-4909-9fe2-947a8d3ed7d5">
 
 ### Image Metrics
-Pour ce qui est de l'application Metrics, nous avons
+Pour ce qui est de l'application Metrics, nous avons une image non compressé avec une taille de 229.92 Mb, puisque l'impact de cette taille est moindre, nous avons décidé de la laisser de cette taille.
+![image](https://github.com/log680-equipe07/oxygencs-grp01-eq07/assets/56934372/3c334084-79ac-465e-8043-00d737c72495)
 
 
 ## Intégration Continue
@@ -61,21 +62,33 @@ Suite au succès du pipeline, il est possible de run le conteneur de l'image cr�
 
 
 ### Pipeline Metrics
-
+L'ajout des métriques de pipeline dans l'application Metrics implique l'ajout de toutes les entités permettant de réduire le couplage de notre application et de la rendre plus résiliente face aux changements et erreurs pouvant survenir.
+Nous avons donc ajouté:
+- un nouveau PipelineService, qui gère la désérialisation de notre réponse de l'api de Graphql GitHub
+- un nouveau modèle DTO pour les informations du pipeline, qui nous permet de faciliter la désérialisation
+- un nouveau modèle d'information de pipeline, pour pouvoir manipuler avec aises une liste d'informations basées sur le data reçu de GitHub
+- un nouveau contrôleur de pipeline, pour gérer nos nouvelles routes et montrer l'information nécessaire. Comprend la plupart des services nécessaire à son fonctionnement sous forme de dependency injection
+- un nouveau modèle d'information représenter le pipeline snapshot, celui-ci comprend:
+  - Guid     -> identificateur unique de l'instance du tableau, représente la clé primaire
+  - RepoName -> nom du repo dont on cherche les informations
+  - Successes -> nombre de builds ayant réussis
+  - Failures  -> nombre de builds ayant échoués
+  - AverageBuildTime -> moyenne de temps d'exécution pour tous les builds
 ## Métriques d'intégration continue
 Pour ce qui est des métriques d'intégration continue, nous avons opté pour celles données en exemple dans l'énoncé de laboratoire, soit:
 
 - temps d'exécution pour un build donné;
-
 - temps moyen d'execution pour l'ensemble de builds pour une période donnée;
-  
 - quantité de builds réussis pour une période donnée;
-
 - quantité de builds échoués pour une période donnée;
 
 Il n'était pas spécifier d'utiliser graphQL pour effectuer nos requêtes sur Metrics, mais puisque nous l'avions fait au laboratoire 1, nous avons décidé de poursuivre avec cet API.
-Il a prouvé difficile de concevoir une requête directement claire avec ce dont nous avions de besoin. mais l'important est la tenacité de ses résultats.
+Il a prouvé difficile de concevoir une requête directement claire avec ce dont nous avions de besoin car l'API GraphQL ne supporte pas encore les requêtes directe de GitHub Actions. Mais l'important est la tenacité de ses résultats.
 
+Nous avons décidé d'implémenter nos 4 métriques dans 4 routes distinctes. Nous avons également ajouté une cinquième route qui représente l'envoie de données du pipeline vers notre base de données. La description de ces données est fournie dans la section Pipeline Metrics
+
+Voici un exemple de notre nouvelle table avec une seule instance pour le moment (1 seul test).
+![image](https://github.com/log680-equipe07/oxygencs-grp01-eq07/assets/56934372/99be66c1-7780-4bd6-995d-8ced054c08c2)
 
 
 
