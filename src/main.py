@@ -12,6 +12,7 @@ import psycopg2
 
 class App:
     """Class representing the application"""
+    '''Adding some comments for testing purposes'''
 
     load_dotenv()
 
