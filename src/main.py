@@ -12,7 +12,6 @@ import psycopg2
 
 class App:
     """Class representing the application"""
-
     load_dotenv()
 
     def __init__(self):
