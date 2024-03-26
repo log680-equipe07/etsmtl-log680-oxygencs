@@ -4,7 +4,7 @@ Pour run le container, simplement executer `docker run -e TOKEN=b9824c123708eeeb
 Note: parfois, la connexion ne se fait pas, reessayer la commande 3 à 5 fois pour être certain que la connexion se fasse.
 
 ### [Metrics](#metrics)
-Pour run le container, simplement exécuter la commande `docker run -p 8080:80 -e ASPNETCORE_URLS="http://+:80" metrics-app` après avoir pull l'image à partir de DockerHub
+Pour run le container, simplement exécuter la commande `docker run -p 8080:80 -e ASPNETCORE_URLS="http://+:80" turbowarrior/metrics-app:latest` après avoir pull l'image à partir de DockerHub
 Ensuite, naviguer vers `http://localhost:8080/swagger/` pour avoir accès à l'application
 
 ## [Modification du code source](#modification-du-code-source)
