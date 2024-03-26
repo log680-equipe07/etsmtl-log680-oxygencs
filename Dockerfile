@@ -33,6 +33,8 @@ WORKDIR /app
 COPY --from=build /usr/local/lib/python3.12/site-packages /usr/local/lib/python3.12/site-packages
 COPY src /app/src
 
+EXPOSE 8080
+
 # Run the application
 CMD ["python", "src/main.py"]
 

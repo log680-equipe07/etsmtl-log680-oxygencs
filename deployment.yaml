@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: oxygen_cs-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: oxygen_cs
+  template:
+    metadata:
+      labels:
+        app: oxygen_cs
+    spec:
+      containers:
+      - name: oxygen_cs-container
+        image: turbowarrior/oxygen_cs:latest
+        ports:
+        - containerPort: 80
+  
