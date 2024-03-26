@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: oxygencs-deployment
+  namespace: grp01eq7-namespace
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: oxygencs
+  template:
+    metadata:
+      labels:
+        app: oxygencs
+    spec:
+      containers:
+        - name: oxygencs-container
+          image: turbowarrior/oxygen_cs-app:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: env-variables
+                  key: HOST
+            - name: T_MAX
+              valueFrom:
+                configMapKeyRef:
+                  name: env-variables
+                  key: T_MAX
+            - name: DATABASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: env-variables
+                  key: DATABASE_URL
+            - name: T_MIN
+              valueFrom:
+                configMapKeyRef:
+                  name: env-variables
+                  key: T_MIN
+            - name: TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: hvac-token
+                  key: TOKEN
+          resources:
+            limits:
+              cpu: "0.5"
+              memory: "512Mi"
+            requests:
+              cpu: "0.1"
+              memory: "128Mi"
+          imagePullPolicy: Always
+      imagePullSecrets:
+        - name: dockerhub-secret
