@@ -104,3 +104,39 @@ Nous avons décidé d'implémenter nos 4 métriques dans 4 routes distinctes. No
 Voici un exemple de notre nouvelle table avec une seule instance pour le moment (1 seul test).
 ![image](https://github.com/log680-equipe07/oxygencs-grp01-eq07/assets/56934372/99be66c1-7780-4bd6-995d-8ced054c08c2)
 
+## [Création d'un Deployment sur Kubernetes](#création-dun-deployment-sur-kubernetes)
+Un fichier de déploiement `oxygen_cs_deployment.yaml` a été créer dans le but de poouvoir rendre l'application HVAC plus mutable et maintenable.
+Les points importants dans ce fichier sont notamment l'utilisation de variable d'environnements, dont des ConfigMaps et des Secrets.
+Une certaine allocation arbitraire de ressources a également été établie:
+
+![image](https://github.com/log680-equipe07/oxygencs-grp01-eq07/assets/56934372/3dd3297f-cd4e-4086-8d63-9b5eb0c519e3)
+
+### [Validation du déploiement HVAC](#validation-du-déploiement-hvac)
+
+Ci-dessous se trouve la preuve que les données de HVAC Sensor sont fidèles aux données présentes dans la base de données:
+
+![image](https://github.com/log680-equipe07/oxygencs-grp01-eq07/assets/56934372/ed67c4a8-7e22-489c-bdea-07726199a7a4)
+![image](https://github.com/log680-equipe07/oxygencs-grp01-eq07/assets/56934372/1503dc50-e6fb-40e9-8c4a-488a0c4fd6c6)
+
+On y aperçoit en effet les mêmes données d'une part et d'autres.
+
+## [Monitoring Grafana](#monitoring-grafana)
+### [Métriques HVAC](#métriques-hvac)
+Afin de validé le fonctionnement des contraintes de HVAC (T_MIN et T_MAX), j'ai ajouté des barres qui délimitent les limites de valeurs que la température peut prendre.
+Le délimiteur rouge représente la limite avant que l'action TurnOnHeater déclenche.
+Le délimiteur bleu représente la limite avant que l'action TurnOnAC déclenche.
+
+Une image illustrant le processus et les métriques est fournie ci-dessous:
+
+![image](https://github.com/log680-equipe07/oxygencs-grp01-eq07/assets/56934372/3e82cfb7-0736-466b-a655-822ba4ab5d30)
+
+À noter que le DashBoard est mise à jour chaque 10 secondes et que seulement les 5 dernières minutes sont conservées dans le graphique et dans la table de variation.
+
+## [Automatisation du déploiement](#automatisation-du-déploiement)
+Pour le déploiement continue, les configurations suivantes ont été ajoutées dans le Pipeline d'intégration.
+
+![image](https://github.com/log680-equipe07/oxygencs-grp01-eq07/assets/56934372/cd1d0c96-0053-4b3f-a93c-f2692a9a5726)
+
+On y voit donc 2 étapes importantes. Il faut dans un premier temps configurer kubectl pour pouvoir l'utiliser dans la commande suivante. Un secrets.KUBE_CONFIG a été créé dans le repositoire d'Oxygen_CS, puis celui-ci a été décodé avant d'être inséré dans le dossier de configuration du container. 
+
+La deuxième étape consiste tout simplement à déployer la nouvelle image dans le cluster. On delete ensuite le pod existant pour que Kubernetes réinstalle immédiatement les nouveaux changements.
