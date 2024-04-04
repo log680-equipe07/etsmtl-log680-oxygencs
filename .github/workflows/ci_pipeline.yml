@@ -63,3 +63,18 @@ jobs:
           docker push "${DOCKERHUB_USERNAME}/oxygen_cs-app:${GITHUB_SHA::8}"
           docker tag oxygen_cs-app "${DOCKERHUB_USERNAME}/oxygen_cs-app:latest"
           docker push "${DOCKERHUB_USERNAME}/oxygen_cs-app:latest"
+
+      - name: Configure kubectl
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: |
+          mkdir -p ~/.kube
+          echo "${{ secrets.KUBE_CONFIG }}" | base64 -d > ~/.kube/config
+          kubectl config set-context --current --namespace=grp01eq7-namespace
+      
+      - name: Deploy to Kubernetes
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+        run: |
+          kubectl set image deployment/oxygencs-deployment oxygencs-container="${DOCKERHUB_USERNAME}/oxygen_cs-app:latest" |
+          kubectl delete pod -l app=oxygencs -n grp01eq7-namespace
