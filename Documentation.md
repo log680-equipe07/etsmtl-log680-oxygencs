@@ -105,7 +105,7 @@ Voici un exemple de notre nouvelle table avec une seule instance pour le moment 
 ![image](https://github.com/log680-equipe07/oxygencs-grp01-eq07/assets/56934372/99be66c1-7780-4bd6-995d-8ced054c08c2)
 
 ## [Création d'un Deployment sur Kubernetes](#création-dun-deployment-sur-kubernetes)
-Un fichier de déploiement `oxygen_cs_deployment.yaml` a été créer dans le but de poouvoir rendre l'application HVAC plus mutable et maintenable.
+Un fichier de déploiement `oxygen_cs_deployment.yaml` a été créé dans le but de pouvoir rendre l'application HVAC plus mutable et maintenable.
 Les points importants dans ce fichier sont notamment l'utilisation de variable d'environnements, dont des ConfigMaps et des Secrets.
 Une certaine allocation arbitraire de ressources a également été établie:
 
