@@ -102,6 +102,7 @@ class App:
 
     def save_event_to_database(self, timestamp, temperature, action):
         """Save sensor data into database."""
+        cur = None
         try:
             if self._db_connection is None:
                 raise ValueError("Database connection is not set up.")
