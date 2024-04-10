@@ -39,7 +39,7 @@ class TestApp(unittest.TestCase):
             '{"Response": "Activating Heater for 10 ticks"}'
         )
         app = App()
-        action = app.take_action(float(15) - 1)
+        action = app.take_action(float(10) - 1)
         self.assertEqual(action, "TurnOnHeater")
         mocked_print.assert_called_with(
             {"Response": "Activating Heater for 10 ticks"}, flush=True
