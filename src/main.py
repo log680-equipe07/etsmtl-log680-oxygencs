@@ -84,7 +84,7 @@ class App:
         if float(temperature) <= float(self.config["t_min"]):
             self.send_action_to_hvac("TurnOnHeater")
             return "TurnOnHeater"
-        return "Aucune Action"
+        return "No Action"
 
     def send_action_to_hvac(self, action):
         """Send action query to the HVAC service."""
