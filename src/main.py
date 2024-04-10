@@ -12,27 +12,32 @@ import psycopg2
 
 class App:
     """Class representing the application"""
+
     load_dotenv()
 
     def __init__(self):
         self._hub_connection = None
+        self._db_connection = None
         self.ticks = 10
-
-        # To be configured
-        self.env_var_host = os.getenv("HOST")  # Setup your host here
-        self.env_var_token = os.getenv("TOKEN")  # Setup your token here
-        self.env_var_t_max = os.getenv("T_MAX")  # Setup your max temperature here
-        self.env_var_t_min = os.getenv("T_MIN")  # Setup your min temperature here
-        self.env_var_database_url = os.getenv("DATABASE_URL")
+        self.config = {
+            "host": os.getenv("HOST"),
+            "token": os.getenv("TOKEN"),
+            "t_max": os.getenv("T_MAX"),
+            "t_min": os.getenv("T_MIN"),
+            "database_url": os.getenv("DATABASE_URL"),
+        }
 
     def __del__(self):
         if self._hub_connection is not None:
             self._hub_connection.stop()
+        if self._db_connection is not None:
+            self._db_connection.close()
 
     def start(self):
         """Start Oxygen CS."""
         self.setup_sensor_hub()
         self._hub_connection.start()
+        self.setup_db_connection()
         print("Press CTRL+C to exit.")
         while True:
             time.sleep(2)
@@ -41,7 +46,7 @@ class App:
         """Configure hub connection and subscribe to sensor data events."""
         self._hub_connection = (
             HubConnectionBuilder()
-            .with_url(f"{self.env_var_host}/SensorHub?token={self.env_var_token}")
+            .with_url(f"{self.config['host']}/SensorHub?token={self.config['token']}")
             .configure_logging(logging.INFO)
             .with_automatic_reconnect(
                 {
@@ -73,10 +78,10 @@ class App:
 
     def take_action(self, temperature):
         """Take action to HVAC depending on current temperature."""
-        if float(temperature) >= float(self.env_var_t_max):
+        if float(temperature) >= float(self.config["t_max"]):
             self.send_action_to_hvac("TurnOnAc")
             return "TurnOnAc"
-        if float(temperature) <= float(self.env_var_t_min):
+        if float(temperature) <= float(self.config["t_min"]):
             self.send_action_to_hvac("TurnOnHeater")
             return "TurnOnHeater"
         return None
@@ -84,17 +89,23 @@ class App:
     def send_action_to_hvac(self, action):
         """Send action query to the HVAC service."""
         r = requests.get(
-            f"{self.env_var_host}/api/hvac/{self.env_var_token}/{action}/{self.ticks}",
+            f"{self.config['host']}/api/hvac/{self.config['token']}/{action}/{self.ticks}",
             timeout=10,
         )
         details = json.loads(r.text)
         print(details, flush=True)
 
+    def setup_db_connection(self):
+        """Setup the database connection."""
+        if self._db_connection is None:
+            self._db_connection = psycopg2.connect(self.config["database_url"])
+
     def save_event_to_database(self, timestamp, temperature, action):
         """Save sensor data into database."""
         try:
-            conn = psycopg2.connect(self.env_var_database_url)
-            cur = conn.cursor()
+            if self._db_connection is None:
+                raise ValueError("Database connection is not set up.")
+            cur = self._db_connection.cursor()
             cur.execute(
                 'INSERT INTO "OxygenCS_SensorData" '
                 '("timestamp", "temperature", "action") '
@@ -102,15 +113,13 @@ class App:
                 (timestamp, temperature, str(action)),
             )
 
-            conn.commit()
+            self._db_connection.commit()
             print("Data saved successfully")
         except psycopg2.Error as e:
             print(f"Failed to save event to database: {e}")
         finally:
             if cur:
                 cur.close()
-            if conn:
-                conn.close()
 
 
 if __name__ == "__main__":
