@@ -6,13 +6,7 @@ from src.main import App
 
 class TestApp(unittest.TestCase):
     """This class contains unit tests for the main.py file"""
-
-    def setUp(self):
-        """Set up the test environment"""
-        self.app = App()
-        self.app.setup_sensor_hub()
-        self.app.setup_db_connection()
-              
+    
     @patch("src.main.requests.get")
     @patch("src.main.print")
     def test_take_action_turn_on_ac(self, mocked_print, mocked_requests_get):
