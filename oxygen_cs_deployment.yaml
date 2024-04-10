@@ -4,7 +4,7 @@ metadata:
   name: oxygencs-deployment
   namespace: grp01eq7-namespace
 spec:
-  replicas: 0
+  replicas: 1
   selector:
     matchLabels:
       app: oxygencs

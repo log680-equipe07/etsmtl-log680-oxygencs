@@ -68,10 +68,10 @@ class App:
     def on_sensor_data_received(self, data):
         """Callback method to handle sensor data on reception."""
         try:
-            print(data[0]["date"] + " --> " + data[0]["data"], flush=True)
             timestamp = data[0]["date"]
             temperature = float(data[0]["data"])
             action = self.take_action(temperature)
+            print(data[0]["date"] + " --> " + data[0]["data"] + ": " + action, flush=True)
             self.save_event_to_database(timestamp, temperature, action)
         except (IndexError, ValueError) as err:
             print(err)
@@ -84,7 +84,7 @@ class App:
         if float(temperature) <= float(self.config["t_min"]):
             self.send_action_to_hvac("TurnOnHeater")
             return "TurnOnHeater"
-        return None
+        return "Aucune Action"
 
     def send_action_to_hvac(self, action):
         """Send action query to the HVAC service."""
