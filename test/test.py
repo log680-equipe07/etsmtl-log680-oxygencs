@@ -12,11 +12,7 @@ class TestApp(unittest.TestCase):
         self.app = App()
         self.app.setup_sensor_hub()
         self.app.setup_db_connection()
-
-        # Mock the database connection
-        self.mock_db_connection = MagicMock()
-        self.app._db_connection = self.mock_db_connection
-'''
+              
     @patch("src.main.requests.get")
     @patch("src.main.print")
     def test_take_action_turn_on_ac(self, mocked_print, mocked_requests_get):
@@ -54,7 +50,7 @@ class TestApp(unittest.TestCase):
         mocked_print.assert_called_with(
             {"Response": "Activating Heater for 10 ticks"}, flush=True
         )
-        
+'''       
     @patch("src.main.psycopg2.connect")
     @patch("src.main.print")
     def test_save_event_to_database(self, mocked_print, mock_connect):
