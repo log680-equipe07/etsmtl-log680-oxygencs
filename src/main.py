@@ -34,7 +34,7 @@ class App:
             self._db_connection.close()
 
     def start(self):
-        """Start Oxygen CS."""
+        """Start Oxygen CS"""
         self.setup_sensor_hub()
         self._hub_connection.start()
         self.setup_db_connection()
